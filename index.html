@@ -1,0 +1,44 @@
+<!doctype html>
+<html style="height:100%;">
+	<head>
+		<title id="title">Onion</title>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="Home page for Onion Corporation" />
+        <meta name="author" content="Onion Corporation" />
+		<meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+		<link rel="icon" type="image/png" href="/images/icon.png">
+
+		<script src="./jquery.js"></script>
+		<script>
+		$(function (){
+			var request;
+			var currentUrl = window.location.href;
+			var wizardUrl = currentUrl + 'setup-wizard';
+			var consoleUrl = currentUrl + 'console';
+			if(window.XMLHttpRequest)
+				request = new XMLHttpRequest();
+			else
+				request = new ActiveXObject("Microsoft.XMLHTTP");
+			request.open('GET', '/console', false);
+			request.send(); // there will be a 'pause' here until the response to come.
+			// the object request will be actually modified
+			if (request.status === 404) {
+				$('#iframe').attr('src', wizardUrl);
+				$('#title').html('Onion Setup Wizard');
+			} else {
+				$('#iframe').attr('src', consoleUrl);
+				$('#title').html('Onion Console');
+			}
+		});
+		</script>
+	</head>
+	<body style="height:100%;margin:0;">
+		<div style="overflow:hidden;height:100%;width:100%">
+			<iframe id="iframe" style="overflow:hidden" height="100%" width="100%" frameborder="0" src="" />
+        </div>
+	</body>
+	
+</html>
+
+
