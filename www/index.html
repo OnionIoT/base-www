@@ -15,19 +15,28 @@
 			var currentUrl = window.location.href;
 			var wizardUrl = currentUrl + 'setup-wizard';
 			var consoleUrl = currentUrl + 'console';
+
+			var showWizard = function () {
+				$('#iframe').attr('src', wizardUrl);
+				$('#title').html('Onion Setup Wizard');
+			}
+			var showConsole = function () {
+				$('#iframe').attr('src', consoleUrl);
+				$('#title').html('Onion Console');
+			}
+
 			if(window.XMLHttpRequest)
 				request = new XMLHttpRequest();
 			else
 				request = new ActiveXObject("Microsoft.XMLHTTP");
-			request.open('GET', '/console', false);
+			request.open('GET', '/console/index.html', false);
 			request.send(); // there will be a 'pause' here until the response to come.
+
 			// the object request will be actually modified
 			if (request.status === 404) {
-				$('#iframe').attr('src', wizardUrl);
-				$('#title').html('Onion Setup Wizard');
+				showWizard();
 			} else {
-				$('#iframe').attr('src', consoleUrl);
-				$('#title').html('Onion Console');
+				showConsole();
 			}
 		});
 		</script>
@@ -37,7 +46,5 @@
 			<iframe id="iframe" style="overflow:hidden" height="100%" width="100%" frameborder="0" src="" />
         </div>
 	</body>
-	
+
 </html>
-
-
