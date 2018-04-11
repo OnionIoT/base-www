@@ -15,28 +15,37 @@
 			var currentUrl = window.location.href;
 			var wizardUrl = currentUrl + 'setup-wizard';
 			var consoleUrl = currentUrl + 'console';
+			var oosUrl = currentUrl + 'OnionOS';
 
 			var showWizard = function () {
 				$('#iframe').attr('src', wizardUrl);
 				$('#title').html('Onion Setup Wizard');
 			}
 			var showConsole = function () {
-				$('#iframe').attr('src', consoleUrl);
-				$('#title').html('Onion Console');
+				window.location.href = consoleUrl;
 			}
-
+			var showOOS = function () {
+				window.location.href = oosUrl;
+			}
 			if(window.XMLHttpRequest)
 				request = new XMLHttpRequest();
 			else
 				request = new ActiveXObject("Microsoft.XMLHTTP");
 			request.open('GET', '/console/index.html', false);
 			request.send(); // there will be a 'pause' here until the response to come.
+			var consoleStatus = request.status;
+			
+			request.open('GET', '/OnionOS/index.html', false);
+			request.send(); // there will be a 'pause' here until the response to come.
+			var oosStatus = request.status;
 
 			// the object request will be actually modified
-			if (request.status === 404) {
-				showWizard();
-			} else {
+			if (oosStatus === 200) {
+				showOOS();
+			} else if (consoleStatus === 200) {
 				showConsole();
+			} else {
+				showWizard();
 			}
 		});
 		</script>
